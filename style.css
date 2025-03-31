@@ -1,0 +1,45 @@
+body {
+
+font-family: 'Montserrat', sans-serif; /* Подключённый шрифт */
+
+margin: 0;
+
+padding: 0;
+
+line-height: 1.6;
+
+background-color: #f9f9f9; /* Светлый фон */
+
+color: #333;
+
+}
+
+header {
+
+background-color: #3498db;
+
+color: white;
+
+text-align: center;
+
+padding: 20px 0;
+
+font-size: 2.5em;
+
+font-weight: 700; /* Толстый текст */
+
+}
+
+footer {
+
+background-color: #f1f1f1;
+
+color: #555;
+
+text-align: center;
+
+padding: 20px 0;
+
+font-size: 1.2em;
+
+}
