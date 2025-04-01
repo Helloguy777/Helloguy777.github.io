@@ -55,19 +55,17 @@
     <script>
         async function fetchFact(event) {
             event.preventDefault();
-            
+
             const query = document.getElementById('query').value;
-            const apiKey = "AIzaSyAryFXVyFl7KdJPPfCFg1wTNzUHIEWG4LA";
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${AIzaSyAryFXVyFl7KdJPPfCFg1wTNzUHIEWG4LA}`;
-            
+
             const requestBody = {
                 contents: [{
                     parts: [{ text: query }]
                 }]
             };
-            
+
             try {
-                const response = await fetch(url, {
+                const response = await fetch('/netlify/functions/fetchFact', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -78,7 +76,7 @@
                 if (!response.ok) {
                     throw new Error(`HTTP Error! Status: ${response.status}`);
                 }
-                
+
                 const result = await response.json();
                 console.log("Raw Server Response:", result);
 
@@ -111,7 +109,7 @@
             <button type="submit">Find Facts</button>
         </form>
     </div>
-    
+
     <div id="response">
     </div>
 
