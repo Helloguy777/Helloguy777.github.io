@@ -1,2 +1,122 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Factwiki</title> <link rel="stylesheet" href="style.css"> <style> body { display: flex; flex-direction: column; min-height: 100vh; margin: 0; } header { text-align: center; background-color: #f3f3f3; padding: 20px; } footer { margin-top: auto; background-color: #222; color: #fff; text-align: center; padding: 10px; } #gpt-banner { margin: 20px auto; padding: 15px; border: 2px solid #ccc; border-radius: 5px; text-align: center; width: 80%; background-color: #f9f9f9; } #gpt-banner button { margin-top: 10px; padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; } #gpt-banner button:hover { background-color: #0056b3; } #response { margin: 20px; padding: 10px; background-color: #eee; border: 1px solid #ccc; } </style> <script> async function fetchFact(event) { event.preventDefault(); const query = document.getElementById('query').value; const apiKey = "AIzaSyAryFXVyFl7KdJPPfCFg1wTNzUHIEWG4LA"; const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apikey}`;
- const requestBody = { contents: [{ parts: [{ text: query }] }] }; try { const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(requestBody) }); if (!response.ok) { throw new Error(`HTTP Error! Status: ${response.status}`); } const result = await response.json(); console.log("Raw Server Response:", result); const output = document.getElementById('response'); if (result.contents && result.contents.length > 0) { const facts = result.contents .map(content => content.parts.map(part => part.text).join(" ")) .join("<br>"); output.innerHTML = `<h3>Response:</h3><p>${facts}</p>`; } else { output.innerHTML = `<h3>No relevant facts found.</h3><p>Please try a different query or refine your input.</p>`; } } catch (error) { console.error('Error:', error); document.getElementById('response').innerHTML = `<p>Oops! Something went wrong. Please try again later.</p>`; } } </script> </head> <body> <header> <h1>Factwiki</h1> </header> <div id="gpt-banner"> <h2>Get Facts from Ai!</h2> <p>Enter a query and discover fascinating facts.</p> <form id="factForm" onsubmit="fetchFact(event)"> <input type="text" id="query" placeholder="Enter your query"> <button type="submit">Find Facts</button> </form> </div> <div id="response"> </div> <footer> <p><span>Contacts:</span></p> <p>Phone: +1666999777</p> <p>Email: askhataskhatik004@gmail.com</p> <p>FpiBank, Fufelshmertz</p> </footer> </body> </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factwiki</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+        header {
+            text-align: center;
+            background-color: #f3f3f3;
+            padding: 20px;
+        }
+        footer {
+            margin-top: auto;
+            background-color: #222;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+        #gpt-banner {
+            margin: 20px auto;
+            padding: 15px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+            width: 80%;
+            background-color: #f9f9f9;
+        }
+        #gpt-banner button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #gpt-banner button:hover {
+            background-color: #0056b3;
+        }
+        #response {
+            margin: 20px;
+            padding: 10px;
+            background-color: #eee;
+            border: 1px solid #ccc;
+        }
+    </style>
+    <script>
+        async function fetchFact(event) {
+            event.preventDefault();
+            const query = document.getElementById('query').value;
+
+            // Validate input
+            if (!query || query.trim() === "") {
+                alert("Введите запрос."); // Alert for empty input
+                return;
+            }
+
+            // Use environment variable for API Key (replace 'YOUR_API_KEY' for testing only)
+            const apiKey = "AIzaSyAryFXVyFl7KdJPPfCFg1wTNzUHIEWG4LA"; // Replace with Netlify environment variable setup
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            const requestBody = { contents: [{ parts: [{ text: query }] }] };
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP Error! Status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                console.log("Raw Server Response:", result);
+
+                const output = document.getElementById('response');
+                if (result.contents && result.contents.length > 0) {
+                    const facts = result.contents
+                        .map(content => content.parts.map(part => part.text).join(" "))
+                        .join("<br>");
+                    output.innerHTML = `<h3>Response:</h3><p>${facts}</p>`;
+                } else {
+                    output.innerHTML = `<h3>No relevant facts found.</h3><p>Please try a different query or refine your input.</p>`;
+                }
+            } catch (error) {
+                console.error('Error Details:', error.message);
+                document.getElementById('response').innerHTML = `<p>Oops! Something went wrong. Please try again later.</p>`;
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Factwiki</h1>
+    </header>
+    <div id="gpt-banner">
+        <h2>Get Facts from Ai!</h2>
+        <p>Enter a query and discover fascinating facts.</p>
+        <form id="factForm" onsubmit="fetchFact(event)">
+            <input type="text" id="query" placeholder="Введите запрос">
+            <button type="submit">Find Facts</button>
+        </form>
+    </div>
+    <div id="response"></div>
+    <footer>
+        <p><span>Контакты:</span></p>
+        <p>Телефон: +1666999777</p>
+        <p>Email: askhataskhatik004@gmail.com</p>
+        <p>FpiBank, Fufelshmertz</p>
+    </footer>
+</body>
+</html>
+
