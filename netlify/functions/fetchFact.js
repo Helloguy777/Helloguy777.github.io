@@ -22,8 +22,8 @@ exports.handler = async (event) => {
             };
         }
 
-        // Load the API key from environment variables
-        const apiKey = process.env.API_KEY;
+        // Replace this with your real API key
+        const apiKey = "AIzaSyAryFXVyFl7KdJPPfCFg1wTNzUHIEWG4LA"; // Вставьте ваш API-ключ сюда
         if (!apiKey) {
             console.error("API key is missing. Check your environment variables.");
             return {
@@ -33,7 +33,7 @@ exports.handler = async (event) => {
         }
 
         // Construct the URL and request body
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${AIzaSyAryFXVyFl7KdJPPfCFg1wTNzUHIEWG4LA}`;
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
         const requestBody = {
             contents: [{ parts: [{ text: query }] }]
         };
@@ -86,4 +86,3 @@ exports.handler = async (event) => {
         };
     }
 };
-
