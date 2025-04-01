@@ -47,6 +47,49 @@
             background-color: #0056b3;
         }
     </style>
+    <script>
+        // Function to handle GPT API request
+        async function fetchFact(event) {
+            event.preventDefault(); // Prevent form from refreshing the page
+            
+            const query = document.getElementById('query').value;
+            const apiKey = "AIzaSyC3bOwKivcJoKWX-3Fn0AMsIHUz9cMt3J0"; // Replace with your actual API key
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            
+            const requestBody = {
+                contents: [{
+                    parts: [{ text: query }]
+                }]
+            };
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                const output = document.getElementById('response');
+                if (result && result.contents) {
+                    // Extract and display the returned content
+                    const facts = result.contents.map(content => content.parts.map(part => part.text).join(" ")).join("<br>");
+                    output.innerHTML = `<h3>Response:</h3><p>${facts}</p>`;
+                } else {
+                    output.innerHTML = `<h3>No relevant data found.</h3>`;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('response').innerHTML = `<p>There was an error processing your request: ${error.message}</p>`;
+            }
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -55,12 +98,17 @@
 
     <!-- GPT Fact Banner -->
     <div id="gpt-banner">
-        <h2>Get Facts from AI!</h2>
+        <h2>Get Facts from GPT!</h2>
         <p>Enter a query and discover fascinating facts.</p>
-        <form action="/getfact" method="POST">
-            <input type="text" name="query" placeholder="Enter your query">
+        <form id="factForm" onsubmit="fetchFact(event)">
+            <input type="text" id="query" placeholder="Enter your query">
             <button type="submit">Find Facts</button>
         </form>
+    </div>
+    
+    <!-- Output Section -->
+    <div id="response" style="margin: 20px; padding: 10px; background-color: #eee; border: 1px solid #ccc;">
+        <!-- The response will be displayed here -->
     </div>
 
     <footer>
