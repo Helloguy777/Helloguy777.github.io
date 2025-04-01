@@ -6,7 +6,6 @@
     <title>Factwiki</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Sticky footer configuration */
         body {
             display: flex;
             flex-direction: column;
@@ -54,12 +53,11 @@
         }
     </style>
     <script>
-        // Function to handle GPT API request
         async function fetchFact(event) {
-            event.preventDefault(); // Prevent form from refreshing the page
+            event.preventDefault();
             
             const query = document.getElementById('query').value;
-            const apiKey = "AIzaSyC3bOwKivcJoKWX-3Fn0AMsIHUz9cMt3J0"; // Replace with your actual API key
+            const apiKey = "AIzaSyC3bOwKivcJoKWX-3Fn0AMsIHUz9cMt3J0";
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
             
             const requestBody = {
@@ -76,19 +74,22 @@
                     },
                     body: JSON.stringify(requestBody)
                 });
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
 
+                if (!response.ok) {
+                    throw new Error(`HTTP Error! Status: ${response.status}`);
+                }
+                
                 const result = await response.json();
+                console.log("Raw Server Response:", result);
+
                 const output = document.getElementById('response');
-                if (result && result.contents) {
-                    // Extract and display the returned content
-                    const facts = result.contents.map(content => content.parts.map(part => part.text).join(" ")).join("<br>");
+                if (result.contents && result.contents.length > 0) {
+                    const facts = result.contents
+                        .map(content => content.parts.map(part => part.text).join(" "))
+                        .join("<br>");
                     output.innerHTML = `<h3>Response:</h3><p>${facts}</p>`;
                 } else {
-                    output.innerHTML = `<h3>No relevant data found.</h3>`;
+                    output.innerHTML = `<h3>No relevant facts found.</h3><p>Please try a different query or refine your input.</p>`;
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -102,7 +103,6 @@
         <h1>Factwiki</h1>
     </header>
 
-    <!-- GPT Fact Banner -->
     <div id="gpt-banner">
         <h2>Get Facts from Ai!</h2>
         <p>Enter a query and discover fascinating facts.</p>
@@ -112,9 +112,7 @@
         </form>
     </div>
     
-    <!-- Output Section -->
     <div id="response">
-        <!-- The response or error message will be displayed here -->
     </div>
 
     <footer>
