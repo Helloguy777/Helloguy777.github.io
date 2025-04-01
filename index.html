@@ -5,11 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Factwiki</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Sticky footer configuration */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+        header {
+            text-align: center;
+            background-color: #f3f3f3;
+            padding: 20px;
+        }
+        footer {
+            margin-top: auto;
+            background-color: #222;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+        #gpt-banner {
+            margin: 20px auto;
+            padding: 15px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+            width: 80%;
+            background-color: #f9f9f9;
+        }
+        #gpt-banner button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #gpt-banner button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <header>
         <h1>Factwiki</h1>
     </header>
+
+    <!-- GPT Fact Banner -->
+    <div id="gpt-banner">
+        <h2>Get Facts from GPT!</h2>
+        <p>Enter a query and discover fascinating facts.</p>
+        <form action="/getfact" method="POST">
+            <input type="text" name="query" placeholder="Enter your query">
+            <button type="submit">Find Facts</button>
+        </form>
+    </div>
+
     <footer>
         <p><span>Contacts:</span></p>
         <p>Phone: +1666999777</p>
