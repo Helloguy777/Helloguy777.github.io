@@ -19,7 +19,7 @@ exports.handler = async (event) => {
         }
 
         const apiKey = "AIzaSyAryFXVyFl7KdJPPfCFg1wTNzUHIEWG4LA";
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${AIzaSyAryFXVyFl7KdJPPfCFg1wTNzUHIEWG4LA}`;
 
         const requestBody = {
             contents: [{
